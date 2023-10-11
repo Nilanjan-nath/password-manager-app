@@ -1,6 +1,7 @@
 from flask import Flask,render_template,url_for,redirect,request,flash
 # from flask_sqlalchemy import SQLAlchemy
 # db = SQLAlchemy()
+from flask_migrate import Migrate
 from .extensions import db,login_manager
 from .models import PasswordManager,User
 from flask_login import login_required
@@ -10,6 +11,7 @@ def create_app():
     app = Flask(__name__)
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data2.db'
     app.config['SECRET_KEY'] = 'the random string'
+    migrate = Migrate(app , db)
 
     db.init_app(app)
     # For managing sessions during login
